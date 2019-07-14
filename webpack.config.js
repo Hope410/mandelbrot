@@ -9,6 +9,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   optimization: {
-    minimizer: [new UglifyJsPlugin()]
+    minimize: true,
+    minimizer: [new UglifyJsPlugin({
+      include: /\.min\.js$/
+    })]
   }
 };

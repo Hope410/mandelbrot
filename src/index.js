@@ -1,4 +1,5 @@
 const math = require('mathjs');
+const { createColors } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
 const width = 20;
