@@ -10,7 +10,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "webpack": "^4.35.0",
+    "mathjs": "^6.0.3"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.5"
   },
   "engines": {
     "node": "8.x"
