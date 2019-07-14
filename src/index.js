@@ -1,8 +1,8 @@
 const math = require('mathjs');
 
 const canvas = document.getElementById('cnvs');
-const width = 960;
-const height = 960;
+const width = 20;
+const height = 20;
 
 canvas.width = width;
 canvas.height = height;
@@ -71,6 +71,8 @@ const render = () =>
     }
   })
 });
+
+render();
 
 // let z = 0;
 // for(let i = 0; i < 3; i++){
