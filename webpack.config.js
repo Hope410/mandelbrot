@@ -8,10 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, 'public/dist'),
     filename: 'bundle.js'
   },
-  optimization: {
-    minimize: true,
-    minimizer: [new UglifyJsPlugin({
-      include: /\.min\.js$/
-    })]
-  }
+  plugins: [
+    new UglifyJsPlugin()
+  ]
 };

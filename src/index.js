@@ -1,9 +1,8 @@
-const math = require('mathjs');
-const { createColors } = require('color-map');
+const { createColors, rgbHex } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
-const width = 20;
-const height = 20;
+const width = 200;
+const height = 200;
 
 canvas.width = width;
 canvas.height = height;
@@ -23,6 +22,8 @@ const
   qmax = 2,
   max_iterations = 255,
   infinity_border = 10;
+
+const map = createColors([0, 0, 255], [0, 255, 128], 16).repeat(16);
 
 const linspace = (min, max, fractions) => {
   const range = max - min;
@@ -65,8 +66,8 @@ const render = () =>
   image._data.forEach((p, i) => {
   p.forEach((q, j) => {
     if(q != 0){
-      q = 255 - (q*3 % 255);
-      drawDot(i, j, `rgba(${q}, ${q}, ${q})`);
+      
+      drawDot(i, j, rgbHex(map[q]));
     }else{
       drawDot(i, j, `rgba(0, 0, 0)`);
     }
