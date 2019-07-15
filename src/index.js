@@ -19,7 +19,7 @@ const
     p_center = -0.793191078177363, 
     q_center = 0.16093721735804;
       
-const scalefactor = 0.0001;
+const scalefactor = 0.1;
 
 const 
   pmin = p_center - scalefactor, 
@@ -70,6 +70,9 @@ const abs = c => math.sqrt(math.add(c.re*c.re, c.im*c.im));
 // console.log(math)
 // console.log(linspace(pmin, pmax, width))
 
+const status = document.getElementById('status');
+
+
 const render = () => {
   const prange = linspace(pmin, pmax, width);
   const qrange = linspace(qmin, qmax, height);
@@ -89,6 +92,8 @@ const render = () => {
           break;
         }
       }
+      
+      status.innerHTML = `Рендерится: ${ip*qrange + iq}/${prange*qrange}<br>`;
     })
   })
 
@@ -98,15 +103,16 @@ const render = () => {
     p.forEach((q, j) => {
       if(q != 0){
 
-        drawDot(i, j, rgbHex(map[q]));
+        drawDot(i, j, rgbHex(getColour(q, max_iterations)));
       }else{
         drawDot(i, j, `rgba(0, 0, 0)`);
       }
     })
   });
+  status.innerHTML = ``;
 }
 
-render();
+setTimeout(render, 300);
 
 // let z = 0;
 // for(let i = 0; i < 3; i++){
