@@ -1,8 +1,8 @@
 const { createColors, rgbHex } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
-const width = 500;
-const height = 500;
+const width = 2000;
+const height = 2000;
 
 canvas.width = width;
 canvas.height = height;
@@ -65,7 +65,7 @@ const linspace = (min, max, fractions) => {
   );
 }
 
-const abs = c => math.sqrt(c.re*c.re + c.im*c.im);
+const abs = c => Math.sqrt(c[0]*c[0] + c[1]*c[1]);
 
 // console.log(math)
 // console.log(linspace(pmin, pmax, width))
@@ -74,18 +74,21 @@ const status = document.getElementById('status');
 
 status.innerHTML = `Рендерится..<br>`;
 
+const complexAdd = (c1, c2) => [c1[0] + c2[0], c1[1] + c2[1]];
+const complexMultiply = (c1, c2) => [c1[0]*c2[0] - c1[1]*c2[1], c1[0]*c2[1] + c1[1]*c2[0]];
+
 const render = () => {
   const prange = linspace(pmin, pmax, width);
   const qrange = linspace(qmin, qmax, height);
 
   prange.forEach((p, ip) => {
     qrange.forEach((q, iq) => {
-      const c = math.complex(p, q);
+      const c = [p, q];
       // console.log(c)
-      let z = 0;
+      let z = [0, 0];
 
       for(let k = 0; k < max_iterations; k++){
-        z = math.add(math.pow(z, 2), c);
+        z = complexAdd(complexMultiply(z, z), c);
 
         if(abs(z) > infinity_border){
           // console.log(c);
