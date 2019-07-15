@@ -2,4 +2,4 @@
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */function(module,exports){eval("throw new Error(\"Module parse failed: Unexpected token (1:32)\\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\\n> import { createColors, rgbHex } = require('color-map');\\n| \\n| \");\n\n//# sourceURL=webpack:///./src/index.js?")}});
+/*! no exports provided */function(module,exports){eval('throw new Error("Module parse failed: Unexpected token (23:10)\\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\\n|   \\n|   computed(){\\n>     pmin(){ return this.p_center - this.scalefactor}, \\n|     pmax(){ return this.p_center + this.scalefactor}, \\n|     qmin(){ return this.q_center - this.scalefactor}, ");\n\n//# sourceURL=webpack:///./src/index.js?')}});
