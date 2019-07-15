@@ -1,8 +1,8 @@
 const { createColors, rgbHex } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
-const width = 500;
-const height = 500;
+const width = 2500;
+const height = 2500;
 
 canvas.width = width;
 canvas.height = height;
@@ -19,7 +19,7 @@ const
     p_center = -0.793191078177363, 
     q_center = 0.16093721735804;
       
-const scalefactor = 0.1;
+const scalefactor = 2;
 
 const 
   pmin = p_center - scalefactor, 
@@ -72,6 +72,7 @@ const abs = c => math.sqrt(math.add(c.re*c.re, c.im*c.im));
 
 const status = document.getElementById('status');
 
+status.innerHTML = `Рендерится..<br>`;
 
 const render = () => {
   const prange = linspace(pmin, pmax, width);
@@ -93,7 +94,6 @@ const render = () => {
         }
       }
       
-      status.innerHTML = `Рендерится: ${ip*qrange + iq}/${prange*qrange}<br>`;
     })
   })
 
