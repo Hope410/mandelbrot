@@ -12733,7 +12733,7 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
     scalefactor: 1,
     max_iterations: 255,
     infinity_border: 10,
-    status: 'Рендерится..'
+    status: 'Рисуется..'
   },
   watch: {
     scalefactor(val, prev) {
@@ -12742,10 +12742,12 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
       }
     },
 
-    scalefactor(val, prev) {
-      if (val == 0) {
-        this.scalefactor = prev;
-      }
+    width(val) {
+      this.width = +val;
+    },
+
+    height(val) {
+      this.height = +val;
     }
 
   },
@@ -12778,7 +12780,7 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
   methods: {
     render() {
-      this.status = 'Рендерится..';
+      this.status = 'Рисуется..';
       const {
         pmin,
         pmax,
@@ -12806,20 +12808,15 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
             if (this.abs(z) > infinity_border) {
               // console.log(c);
-              this.image._data[ip][iq] = k;
+              // this.image._data[ip][iq] = k;
+              this.drawDot(ip, iq, Object(color_map__WEBPACK_IMPORTED_MODULE_0__["rgbHex"])(this.getColour(k, max_iterations)));
               break;
+            } else {
+              this.drawDot(ip, iq, Object(color_map__WEBPACK_IMPORTED_MODULE_0__["rgbHex"])([0, 0, 0]));
             }
           }
         });
-      }); // image = math.transpose(image);
-      // console.log(image);
-
-      this.image._data.forEach((p, i) => {
-        p.forEach((q, j) => {
-          this.drawDot(i, j, Object(color_map__WEBPACK_IMPORTED_MODULE_0__["rgbHex"])(this.getColour(q, max_iterations)));
-        });
       });
-
       this.status = `Готово!`;
     },
 

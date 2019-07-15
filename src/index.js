@@ -16,7 +16,7 @@ new Vue({
     max_iterations: 255,
     infinity_border: 10,
     
-    status: 'Рендерится..',
+    status: 'Рисуется..',
   },
   
   watch: {
@@ -25,10 +25,11 @@ new Vue({
         this.scalefactor = prev;
       }
     },
-    scalefactor(val, prev){
-      if(val == 0){
-        this.scalefactor = prev;
-      }
+    width(val){
+      this.width = +val;
+    },
+    height(val){
+      this.height = +val;
     }
   },
   
@@ -50,7 +51,7 @@ new Vue({
   
   methods: {
     render(){
-      this.status = 'Рендерится..';
+      this.status = 'Рисуется..';
       
       const {
         pmin, pmax, qmin, qmax, width, height,
@@ -60,9 +61,8 @@ new Vue({
       this.canvas.width = width;
       this.canvas.height = height;
       
-      this.image = math.zeros(width, height);
-      
-      console.log(0,0,width,height);
+      this.ctx.fillStyle = color;
+      this.ctx.fillRect(x, y, 1, 1);
       
       const prange = this.linspace(pmin, pmax, width);
       const qrange = this.linspace(qmin, qmax, height);
@@ -78,21 +78,14 @@ new Vue({
 
             if(this.abs(z) > infinity_border){
               // console.log(c);
-              this.image._data[ip][iq] = k;
+              // this.image._data[ip][iq] = k;
+              this.drawDot(ip, iq, rgbHex(this.getColour(k, max_iterations)));
               break;
             }
           }
 
         })
       })
-
-      // image = math.transpose(image);
-      // console.log(image);
-      this.image._data.forEach((p, i) => {
-        p.forEach((q, j) => {
-          this.drawDot(i, j, rgbHex(this.getColour(q, max_iterations)));
-        })
-      });
       
       this.status = `Готово!`;
     },
@@ -129,9 +122,7 @@ new Vue({
     linspace(min, max, fractions){
       const range = max - min;
       return [...new Array(fractions)].map((_, i) => 
-        +math.format(
-          min + (range/fractions)*i, {precision: 14}
-        )
+        min + (range/fractions)*i
       );
     },
     abs(c){
