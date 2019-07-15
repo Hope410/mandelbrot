@@ -1,8 +1,8 @@
 const { createColors, rgbHex } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
-const width = 200;
-const height = 200;
+const width = 500;
+const height = 500;
 
 canvas.width = width;
 canvas.height = height;
@@ -23,7 +23,9 @@ const
   max_iterations = 255,
   infinity_border = 10;
 
-const map = createColors([0, 0, 255], [0, 255, 128], 16).repeat(16);
+const repeat = (a, n) => n == 0 ? a : repeat(a.concat(a), --n);
+
+const map = repeat(createColors([0, 0, 255], [0, 255, 128], 8), 32);
 
 const linspace = (min, max, fractions) => {
   const range = max - min;
@@ -48,7 +50,7 @@ prange.forEach((p, ip) => {
     let z = 0;
 
     for(let k = 0; k < max_iterations; k++){
-      z = math.add(math.square(z), c);
+      z = math.add(math.pow(z, 2), c);
 
       if(abs(z) > infinity_border){
         // console.log(c);
