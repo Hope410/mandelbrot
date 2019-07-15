@@ -12735,20 +12735,6 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
     infinity_border: 10,
     status: 'Рендерится..'
   },
-  watch: {
-    p_center() {
-      this.render();
-    },
-
-    q_center() {
-      this.render();
-    },
-
-    scalefactor() {
-      this.render();
-    }
-
-  },
   computed: {
     pmin() {
       return this.p_center - 1 / this.scalefactor;
@@ -12769,7 +12755,6 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
   },
 
   mounted() {
-    this.image = math.zeros(this.width, this.height);
     this.canvas = this.$refs.canvas;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
@@ -12790,8 +12775,8 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
         max_iterations,
         infinity_border
       } = this;
-      this.ctx.fillStyle = 'rgb(0,0,0)';
-      this.ctx.fillRect(0, 0, width, height);
+      this.image = math.zeros(width, height);
+      console.log(0, 0, width, height);
       const prange = this.linspace(pmin, pmax, width);
       const qrange = this.linspace(qmin, qmax, height);
       prange.forEach((p, ip) => {
@@ -12815,11 +12800,7 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
       this.image._data.forEach((p, i) => {
         p.forEach((q, j) => {
-          if (q != 0) {
-            this.drawDot(i, j, Object(color_map__WEBPACK_IMPORTED_MODULE_0__["rgbHex"])(this.getColour(q, max_iterations)));
-          } else {
-            this.drawDot(i, j, `rgba(0, 0, 0)`);
-          }
+          this.drawDot(i, j, Object(color_map__WEBPACK_IMPORTED_MODULE_0__["rgbHex"])(this.getColour(q, max_iterations)));
         });
       });
 
@@ -12852,6 +12833,8 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
         map[14] = [153, 87, 0];
         map[15] = [106, 52, 3];
         return map[i];
+      } else {
+        return [0, 0, 0];
       }
     },
 

@@ -19,27 +19,13 @@ new Vue({
     status: 'Рендерится..',
   },
   
-  watch: {
-    p_center(){
-      this.render();
-    },
-    q_center(){
-      this.render();
-    },
-    scalefactor(){
-      this.render();
-    }
-  },
-  
   computed: {
     pmin(){ return this.p_center - 1/this.scalefactor}, 
     pmax(){ return this.p_center + 1/this.scalefactor}, 
     qmin(){ return this.q_center - 1/this.scalefactor}, 
     qmax(){ return this.q_center + 1/this.scalefactor},
   },
-  mounted(){
-    this.image = math.zeros(this.width, this.height);
-    
+  mounted(){    
     this.canvas = this.$refs.canvas;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
@@ -58,9 +44,9 @@ new Vue({
         
         max_iterations, infinity_border,
       } = this;
+      this.image = math.zeros(width, height);
       
-      this.ctx.fillStyle = 'rgb(0,0,0)';
-      this.ctx.fillRect(0,0,width,height);
+      console.log(0,0,width,height);
       
       const prange = this.linspace(pmin, pmax, width);
       const qrange = this.linspace(qmin, qmax, height);
@@ -88,12 +74,7 @@ new Vue({
       // console.log(image);
       this.image._data.forEach((p, i) => {
         p.forEach((q, j) => {
-          if(q != 0){
-
-            this.drawDot(i, j, rgbHex(this.getColour(q, max_iterations)));
-          }else{
-            this.drawDot(i, j, `rgba(0, 0, 0)`);
-          }
+          this.drawDot(i, j, rgbHex(this.getColour(q, max_iterations)));
         })
       });
       
@@ -125,6 +106,8 @@ new Vue({
         map[14] = [153, 87, 0];
         map[15] = [106, 52, 3];
         return map[i];
+      }else{
+        return [0,0,0];
       }
     },
     linspace(min, max, fractions){
