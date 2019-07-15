@@ -19,7 +19,7 @@ const
     p_center = -0.793191078177363, 
     q_center = 0.16093721735804;
       
-const scalefactor = 0.02;
+const scalefactor = 0.001;
 
 const 
   pmin = p_center - scalefactor, 
@@ -31,8 +31,8 @@ const
 
 const repeat = (a, n, b = []) => n > 0 ? repeat(a, n - 1, b.concat(a(n))) : b;
 
-const map = repeat((i) => createColors([0, 0, 128], [255, 16*4 - i*4, 128], 16), 16);
-// console.log(map.length)
+const map = repeat((i) => createColors([0, 0, 128 + i*8], [255, 16*15 - i*15, 0], 16), 16);
+// console.log(map)
 
 const linspace = (min, max, fractions) => {
   const range = max - min;
