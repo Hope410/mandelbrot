@@ -19,18 +19,20 @@ const
     p_center = -0.793191078177363, 
     q_center = 0.16093721735804;
       
+const scalefactor = 0.2;
 
 const 
-  pmin = -1.5, 
-  pmax = 0.5, 
-  qmin = -1, 
-  qmax = 1,
+  pmin = p_center - scalefactor, 
+  pmax = p_center + scalefactor, 
+  qmin = q_center - scalefactor, 
+  qmax = q_center + scalefactor,
   max_iterations = 255,
   infinity_border = 10;
 
-const repeat = (a, n) => n > 0 ? repeat(a.concat(a), n - 1) : a;
+const repeat = (a, n, b = []) => n > 0 ? repeat(a, n - 1, b.concat(a(n))) : b;
 
-const map = repeat(createColors([0, 0, 255], [0, 255, 128], 8), 5);
+const map = repeat((i) => createColors([0, 0, 128], [255, i*4, 128], 8), 32);
+// console.log(map.length)
 
 const linspace = (min, max, fractions) => {
   const range = max - min;
@@ -45,43 +47,44 @@ const abs = c => math.sqrt(math.add(c.re*c.re, c.im*c.im));
 
 // console.log(math)
 // console.log(linspace(pmin, pmax, width))
-const prange = linspace(pmin, pmax, width);
-const qrange = linspace(qmin, qmax, height);
 
-prange.forEach((p, ip) => {
-  qrange.forEach((q, iq) => {
-    const c = math.complex(p, q);
-    // console.log(c)
-    let z = 0;
+const render = () => {
+  const prange = linspace(pmin, pmax, width);
+  const qrange = linspace(qmin, qmax, height);
 
-    for(let k = 0; k < max_iterations; k++){
-      z = math.add(math.pow(z, 2), c);
+  prange.forEach((p, ip) => {
+    qrange.forEach((q, iq) => {
+      const c = math.complex(p, q);
+      // console.log(c)
+      let z = 0;
 
-      if(abs(z) > infinity_border){
-        // console.log(c);
-        image._data[ip][iq] = k;
-        break;
+      for(let k = 0; k < max_iterations; k++){
+        z = math.add(math.pow(z, 2), c);
+
+        if(abs(z) > infinity_border){
+          // console.log(c);
+          image._data[ip][iq] = k;
+          break;
+        }
       }
-    }
+    })
   })
-})
 
-// image = math.transpose(image);
-// console.log(image);
-
-const render = () => 
+  // image = math.transpose(image);
+  // console.log(image);
   image._data.forEach((p, i) => {
-  p.forEach((q, j) => {
-    if(q != 0){
-      
-      drawDot(i, j, rgbHex(map[q]));
-    }else{
-      drawDot(i, j, `rgba(0, 0, 0)`);
-    }
-  })
-});
+    p.forEach((q, j) => {
+      if(q != 0){
 
-render();
+        drawDot(i, j, rgbHex(map[q]));
+      }else{
+        drawDot(i, j, `rgba(0, 0, 0)`);
+      }
+    })
+  });
+}
+
+// render();
 
 // let z = 0;
 // for(let i = 0; i < 3; i++){
