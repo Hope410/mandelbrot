@@ -1,8 +1,10 @@
-const { createColors, rgbHex } = require('color-map');
+import { createColors, rgbHex } from ('color-map');
+
+
 
 const canvas = document.getElementById('cnvs');
-const width = 2000;
-const height = 2000;
+const width = 1000;
+const height = 1000;
 
 canvas.width = width;
 canvas.height = height;
@@ -16,10 +18,10 @@ const drawDot = (x, y, color) => {
 };
 
 const 
-    p_center = -0.793191078177363, 
+    p_center = -0.793301078177363, 
     q_center = 0.16093721735804;
       
-const scalefactor = 2;
+const scalefactor = 0.0001;
 
 const 
   pmin = p_center - scalefactor, 
@@ -88,7 +90,9 @@ const render = () => {
       let z = [0, 0];
 
       for(let k = 0; k < max_iterations; k++){
-        z = complexAdd(complexMultiply(z, z), c);
+        z = complexAdd(
+          complexMultiply(z, z), 
+          c);
 
         if(abs(z) > infinity_border){
           // console.log(c);
