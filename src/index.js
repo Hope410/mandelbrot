@@ -1,8 +1,8 @@
 const { createColors, rgbHex } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
-const width = 1000;
-const height = 1000;
+const width = 500;
+const height = 500;
 
 canvas.width = width;
 canvas.height = height;
@@ -14,6 +14,11 @@ const drawDot = (x, y, color) => {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 1, 1);
 };
+
+const 
+    p_center = -0.793191078177363, 
+    q_center = 0.16093721735804;
+      
 
 const 
   pmin = -1.5, 
