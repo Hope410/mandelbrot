@@ -23,9 +23,11 @@ const
   max_iterations = 255,
   infinity_border = 10;
 
-const repeat = (a, n) => n == 0 ? a : repeat(a.concat(a), --n);
+const repeat = (a, n) => n < 0 ? repeat(a.concat(a), --n) : a;
 
 const map = repeat(createColors([0, 0, 255], [0, 255, 128], 8), 32);
+
+console.log(map.length)
 
 const linspace = (min, max, fractions) => {
   const range = max - min;
@@ -76,7 +78,7 @@ const render = () =>
   })
 });
 
-render();
+// render();
 
 // let z = 0;
 // for(let i = 0; i < 3; i++){
