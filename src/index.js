@@ -25,12 +25,10 @@ new Vue({
         this.scalefactor = prev;
       }
     },
-    width(val){
-      this.width = +val;
-    },
-    height(val){
-      this.height = +val;
-    }
+    width(val){ this.width = +val; },
+    height(val){ this.height = +val; },
+    p_center(val){ this.p_center = +val; },
+    q_center(val){ this.q_center = +val; }
   },
   
   computed: {
@@ -61,8 +59,8 @@ new Vue({
       this.canvas.width = width;
       this.canvas.height = height;
       
-      this.ctx.fillStyle = color;
-      this.ctx.fillRect(x, y, 1, 1);
+      this.ctx.fillStyle = '#000';
+      this.ctx.fillRect(0, 0, width, height);
       
       const prange = this.linspace(pmin, pmax, width);
       const qrange = this.linspace(qmin, qmax, height);

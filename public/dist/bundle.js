@@ -12748,6 +12748,14 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
     height(val) {
       this.height = +val;
+    },
+
+    p_center(val) {
+      this.p_center = +val;
+    },
+
+    q_center(val) {
+      this.q_center = +val;
     }
 
   },
@@ -12793,8 +12801,8 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
       } = this;
       this.canvas.width = width;
       this.canvas.height = height;
-      this.image = math.zeros(width, height);
-      console.log(0, 0, width, height);
+      this.ctx.fillStyle = '#000';
+      this.ctx.fillRect(0, 0, width, height);
       const prange = this.linspace(pmin, pmax, width);
       const qrange = this.linspace(qmin, qmax, height);
       prange.forEach((p, ip) => {
@@ -12811,8 +12819,6 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
               // this.image._data[ip][iq] = k;
               this.drawDot(ip, iq, Object(color_map__WEBPACK_IMPORTED_MODULE_0__["rgbHex"])(this.getColour(k, max_iterations)));
               break;
-            } else {
-              this.drawDot(ip, iq, Object(color_map__WEBPACK_IMPORTED_MODULE_0__["rgbHex"])([0, 0, 0]));
             }
           }
         });
@@ -12853,9 +12859,7 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
     linspace(min, max, fractions) {
       const range = max - min;
-      return [...new Array(fractions)].map((_, i) => +math.format(min + range / fractions * i, {
-        precision: 14
-      }));
+      return [...new Array(fractions)].map((_, i) => min + range / fractions * i);
     },
 
     abs(c) {
