@@ -1,8 +1,8 @@
 const { createColors, rgbHex } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
-const width = 1000;
-const height = 1000;
+const width = 500;
+const height = 500;
 
 canvas.width = width;
 canvas.height = height;
@@ -31,8 +31,30 @@ const
 
 const repeat = (a, n, b = []) => n > 0 ? repeat(a, n - 1, b.concat(a(n))) : b;
 
-const map = repeat((i) => createColors([0, 0, 128], [255, 255, 16*15 - i*15], 16), 16);
-// console.log(map)
+const getColour = (n, max) => {
+  if (n < max && n > 0) {
+    let i = n % 16;
+    let map = new Array(16);
+    
+    map[0] = [66, 30, 15];
+    map[1] = [25, 7, 26];
+    map[2] = [9, 1, 47];
+    map[3] = [4, 4, 73];
+    map[4] = [0, 7, 100];
+    map[5] = [12, 44, 138];
+    map[6] = [24, 82, 177];
+    map[7] = [57, 125, 209];
+    map[8] = [134, 181, 229];
+    map[9] = [211, 236, 248];
+    map[10] = [241, 233, 191];
+    map[11] = [248, 201, 95];
+    map[12] = [255, 170, 0];
+    map[13] = [204, 128, 0];
+    map[14] = [153, 87, 0];
+    map[15] = [106, 52, 3];
+    return map[i];
+  }
+}
 
 const linspace = (min, max, fractions) => {
   const range = max - min;
