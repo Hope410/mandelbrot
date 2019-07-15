@@ -10,10 +10,28 @@
   <body>
     <div id="app">
       <div class="options">
-        <input type="number" v-model="p_center"
+        <table>
+          <tbody>
+            <tr>
+              <td>Центр X:</td>
+              <td><input id="p_center" type="number" v-model="p_center"></td>
+            </tr>
+            <tr>
+              <td>Центр Y:</td>
+              <td><input id="q_center" type="number" v-model="q_center"></td>
+            </tr>
+            <tr>
+              <td>Коэффициент увеличения:</td>
+              <td><input id="scalefactor" type="number" v-model="scalefactor"></td>
+            </tr>
+            <tr>
+              <td>Статус:</td>
+              <td>{{status}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       
-      <span v-if="status">{{status}}<br></span>
       <canvas id="cnvs" ref="canvas">
       </canvas>
     </div>

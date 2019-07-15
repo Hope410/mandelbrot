@@ -11,12 +11,12 @@ new Vue({
     
     p_center: -0.793301078177363,
     q_center: 0.16093721735804,
-    scalefactor: 2,
+    scalefactor: 1,
 
     max_iterations: 255,
     infinity_border: 10,
     
-    status: '',
+    status: 'Рендерится..',
   },
   
   watch: {
@@ -32,10 +32,10 @@ new Vue({
   },
   
   computed: {
-    pmin(){ return this.p_center - this.scalefactor}, 
-    pmax(){ return this.p_center + this.scalefactor}, 
-    qmin(){ return this.q_center - this.scalefactor}, 
-    qmax(){ return this.q_center + this.scalefactor},
+    pmin(){ return this.p_center - 1/this.scalefactor}, 
+    pmax(){ return this.p_center + 1/this.scalefactor}, 
+    qmin(){ return this.q_center - 1/this.scalefactor}, 
+    qmax(){ return this.q_center + 1/this.scalefactor},
   },
   mounted(){
     this.image = math.zeros(this.width, this.height);
@@ -58,6 +58,9 @@ new Vue({
         
         max_iterations, infinity_border,
       } = this;
+      
+      this.ctx.fillStyle = 'rgb(0,0,0)';
+      this.ctx.fillRect(0,0,width,height);
       
       const prange = this.linspace(pmin, pmax, width);
       const qrange = this.linspace(qmin, qmax, height);
@@ -93,7 +96,8 @@ new Vue({
           }
         })
       });
-      this.status = ``;
+      
+      this.status = `Готово!`;
     },
     drawDot(x, y, color) {
       this.ctx.fillStyle = color;
