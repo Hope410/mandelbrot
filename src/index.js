@@ -11,37 +11,56 @@ new Vue({
     
     p_center: -0.793301078177363,
     q_center: 0.16093721735804,
-    scalefactor: 0.0001,
+    scalefactor: 2,
 
     max_iterations: 255,
     infinity_border: 10,
     
-    status: 'Рендерится..'
+    status: '',
   },
   
-  computed(){
+  watch: {
+    p_center(){
+      this.render();
+    },
+    q_center(){
+      this.render();
+    },
+    scalefactor(){
+      this.render();
+    }
+  },
+  
+  computed: {
     pmin(){ return this.p_center - this.scalefactor}, 
     pmax(){ return this.p_center + this.scalefactor}, 
     qmin(){ return this.q_center - this.scalefactor}, 
     qmax(){ return this.q_center + this.scalefactor},
   },
   mounted(){
+    this.image = math.zeros(this.width, this.height);
+    
     this.canvas = this.$refs.canvas;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     
     this.ctx = this.canvas.getContext('2d');
     
-    setTimeout(render, 300);
+    setTimeout(this.render, 300);
   },
   
   methods: {
     render(){
+      this.status = 'Рендерится..';
+      
       const {
-        pmin, pmax, qmin, qmax, 
-      }
-      const prange = this.linspace(this.pmin, this.pmax, this.width);
-      const qrange = this.linspace(qmin, qmax, this.height);
+        pmin, pmax, qmin, qmax, width, height,
+        
+        max_iterations, infinity_border,
+      } = this;
+      
+      const prange = this.linspace(pmin, pmax, width);
+      const qrange = this.linspace(qmin, qmax, height);
 
       prange.forEach((p, ip) => {
         qrange.forEach((q, iq) => {
@@ -50,13 +69,11 @@ new Vue({
           let z = [0, 0];
 
           for(let k = 0; k < max_iterations; k++){
-            z = complexAdd(
-              complexMultiply(z, z), 
-              c);
+            z = this.complexAdd(this.complexMultiply(z, z), c);
 
-            if(abs(z) > infinity_border){
+            if(this.abs(z) > infinity_border){
               // console.log(c);
-              image._data[ip][iq] = k;
+              this.image._data[ip][iq] = k;
               break;
             }
           }
@@ -66,23 +83,23 @@ new Vue({
 
       // image = math.transpose(image);
       // console.log(image);
-      image._data.forEach((p, i) => {
+      this.image._data.forEach((p, i) => {
         p.forEach((q, j) => {
           if(q != 0){
 
-            drawDot(i, j, rgbHex(getColour(q, max_iterations)));
+            this.drawDot(i, j, rgbHex(this.getColour(q, max_iterations)));
           }else{
-            drawDot(i, j, `rgba(0, 0, 0)`);
+            this.drawDot(i, j, `rgba(0, 0, 0)`);
           }
         })
       });
-      status.innerHTML = ``;
+      this.status = ``;
     },
     drawDot(x, y, color) {
       this.ctx.fillStyle = color;
       this.ctx.fillRect(x, y, 1, 1);
     },
-    getColour = (n) => {
+    getColour(n) {
       if (n < this.max_iterations && n > 0) {
         let i = n % 16;
         let map = new Array(16);
