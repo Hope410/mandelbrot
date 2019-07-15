@@ -1,8 +1,8 @@
 const { createColors, rgbHex } = require('color-map');
 
 const canvas = document.getElementById('cnvs');
-const width = 2500;
-const height = 2500;
+const width = 500;
+const height = 500;
 
 canvas.width = width;
 canvas.height = height;
@@ -60,12 +60,12 @@ const linspace = (min, max, fractions) => {
   const range = max - min;
   return [...new Array(fractions)].map((_, i) => 
     +math.format(
-      math.evaluate(`${min} + (${range}/${fractions})*${i}`), {precision: 14}
+      min + (range/fractions)*i, {precision: 14}
     )
   );
 }
 
-const abs = c => math.sqrt(math.add(c.re*c.re, c.im*c.im));
+const abs = c => math.sqrt(c.re*c.re + c.im*c.im);
 
 // console.log(math)
 // console.log(linspace(pmin, pmax, width))
