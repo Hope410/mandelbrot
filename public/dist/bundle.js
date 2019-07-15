@@ -12735,6 +12735,20 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
     infinity_border: 10,
     status: 'Рендерится..'
   },
+  watch: {
+    scalefactor(val, prev) {
+      if (val == 0) {
+        this.scalefactor = prev;
+      }
+    },
+
+    scalefactor(val, prev) {
+      if (val == 0) {
+        this.scalefactor = prev;
+      }
+    }
+
+  },
   computed: {
     pmin() {
       return this.p_center - 1 / this.scalefactor;
@@ -12775,6 +12789,8 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
         max_iterations,
         infinity_border
       } = this;
+      this.canvas.width = width;
+      this.canvas.height = height;
       this.image = math.zeros(width, height);
       console.log(0, 0, width, height);
       const prange = this.linspace(pmin, pmax, width);

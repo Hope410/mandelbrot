@@ -19,6 +19,19 @@ new Vue({
     status: 'Рендерится..',
   },
   
+  watch: {
+    scalefactor(val, prev){
+      if(val == 0){
+        this.scalefactor = prev;
+      }
+    },
+    scalefactor(val, prev){
+      if(val == 0){
+        this.scalefactor = prev;
+      }
+    }
+  },
+  
   computed: {
     pmin(){ return this.p_center - 1/this.scalefactor}, 
     pmax(){ return this.p_center + 1/this.scalefactor}, 
@@ -44,6 +57,9 @@ new Vue({
         
         max_iterations, infinity_border,
       } = this;
+      this.canvas.width = width;
+      this.canvas.height = height;
+      
       this.image = math.zeros(width, height);
       
       console.log(0,0,width,height);
