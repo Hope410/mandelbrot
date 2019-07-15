@@ -14,7 +14,7 @@ new Vue({
     scalefactor: 1,
 
     max_iterations: 255,
-    infinity_border: 1,
+    infinity_border: 2,
     
     status: 'Рисуется..',
   },

@@ -12732,7 +12732,7 @@ new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
     q_center: 0.16093721735804,
     scalefactor: 1,
     max_iterations: 255,
-    infinity_border: 1,
+    infinity_border: 2,
     status: 'Рисуется..'
   },
   watch: {
